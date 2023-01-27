@@ -133,7 +133,7 @@
 
     // Send a GET request to the OSRM API
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://router.project-osrm.org/route/v1/foot/" + start[1] + "," + start[0] + ";" + end[1] + "," + end[0] + "?geometries=geojson", true);
+    xhr.open("GET", "http://router.project-osrm.org/route/v1/driving/" + start[1] + "," + start[0] + ";" + end[1] + "," + end[0] + "?geometries=geojson", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Parse the response
