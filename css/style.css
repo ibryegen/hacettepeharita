@@ -1,0 +1,196 @@
+#map {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+
+}
+
+.Form {
+    max-width: 300px;
+    background-color: #ff3232;
+    color: rgb(255, 253, 253);
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    padding: 20px;
+    z-index: 999;
+    box-shadow: 0 1px 5px rgba(251, 223, 223, 0.65);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.Form label {
+    font-size: 18px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+
+.Form input {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    border-radius: 3px;
+    background-color: #e0e0e0;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+#form {
+    padding: 0;
+    margin: 0;   
+}
+
+
+
+.Form button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.Form button:hover {
+    background-color: #3e8e41;
+}
+
+input:nth-child(1){
+    margin-bottom: 10px;
+}
+
+.leaflet-top .leaflet-control{
+    margin-top: 300px;
+}
+
+/* The container for the start dropdown menu */
+#start-locations {
+    position: relative;
+    display: inline-block;
+}
+
+/* The button that opens the start dropdown menu */
+#start {
+    background-color: #939d94;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container for the start dropdown menu items */
+#start-locations {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Show the start dropdown menu when the button is hovered over */
+#start:hover #start-locations {
+    display: block;
+}
+
+/* The start dropdown menu items */
+#start-locations option {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of start dropdown menu items on hover */
+#start-locations option:hover {
+    background-color: #f1f1f1;
+}
+/* The container for the end dropdown menu */
+#end-locations {
+    position: relative;
+    display: inline-block;
+}
+
+/* The button that opens the end dropdown menu */
+#end {
+    background-color: #979595;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container for the end dropdown menu items */
+#end-locations {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Show the end dropdown menu when the button is hovered over */
+#end:hover #end-locations {
+    display: block;
+}
+
+/* The end dropdown menu items */
+#end-locations option {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of end dropdown menu items on hover */
+#end-locations option:hover {
+    background-color: #f1f1f1;
+}
+
+
+.logo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: auto; /* adjust width of the logo */
+    height: auto; /* adjust height of the logo */
+    background-size: contain;
+    z-index: 10;
+}
+
+.logo img {
+    transform: scale(0.7);
+}
+
+.bottom-menu-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #222;
+    color: #fff;
+    z-index: 2;
+}
+
+.bottom-menu-bar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+  
+.bottom-menu-bar a:hover {
+    color: #ddd;
+}

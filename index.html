@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-control-geocoder"></script>
+    
+
+
+    
+    <link rel="stylesheet" href="css/style.css">
+
+    <div class="logo">
+        <img src="https://upload.wikimedia.org/wikipedia/tr/2/28/Hacettepe_Üniversitesi_Logosu.svg">
+    </div>
+
+    <title>Hacettepe Harita</title>
+</head>
+<body style="border: 0;margin: 0;">
+    
+    <div class="Form">
+        <form>
+            <label for="start">Başlangıç Noktası:</label>
+            <input id="start" name="start" list="locations">
+            <datalist id="locations">
+                <option value="51.505,-0.09">London</option>
+                <option value="39.86559032899905, 32.733689202423385">Geomatik Mühendisliği</option>
+                <option value="39.868462585354564, 32.73187768914022">Beytepe Alışveriş Merkezi</option>
+                <option value="39.86699050690428, 32.74047534884292">Yeşil Vadi</option>
+                <option value="39.86809708736998, 32.73407042706074">Gün Hastanesi</option>
+                <option value="39.884525952151705, 32.73535037952133">KYK Kız Öğrenci Yurdu</option>
+                <option value="39.90666917986642, 32.733105999033825">Beytepe Metro İstasyonu</option>
+                <option value="39.86330250990634, 32.73662472463153">Hacettepe Teknokent</option>
+            </datalist>
+        
+            <label for="end">Bitiş Noktası:</label>
+            <input id="end" name="end" list="locations">
+            <button id="getRoute" type="button">Rota Ayarla</button>
+        </form>
+        
+    </div>
+    
+      
+
+    
+
+    
+
+    <div class="bottom-menu-bar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </div>
+      
+  
+    <div id="map"></div>
+      
+
+    <script>
+      var map = L.map('map').setView([39.86558553126732, 32.733744856304185], 17);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+        maxZoom: 18,
+      }).addTo(map);
+
+      
+
+    
+    
+      var getRouteButton = document.getElementById("getRoute");
+  getRouteButton.addEventListener("click", updateCoordinates);
+    var startSelect = document.getElementById("start");
+    var endSelect = document.getElementById("end");
+
+    var markers = []
+
+  function updateCoordinates() {
+    
+
+    // Get the selected coordinates from the form elements
+    var startCoordinates = document.getElementById("start").value.split(",");
+    var endCoordinates = document.getElementById("end").value.split(",");
+    
+
+    // Update the start and end variables in the JavaScript code
+    var start = [parseFloat(startCoordinates[0]), parseFloat(startCoordinates[1])];
+    var end = [parseFloat(endCoordinates[0]), parseFloat(endCoordinates[1])];
+
+
+    var startIcon = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+    });
+    var endIcon = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+    });
+
+    
+    // remove old markers 
+    markers.forEach(function(marker) {
+        map.removeLayer(marker);
+    });
+
+    // add new markers
+    var startMarker = L.marker(start, {icon: startIcon}).addTo(map);
+    var endMarker = L.marker(end, {icon: endIcon}).addTo(map);
+
+    // keep track of markers
+    markers = [startMarker, endMarker];
+
+
+
+
+
+
+
+
+    // Send a GET request to the OSRM API
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://router.project-osrm.org/route/v1/foot/" + start[1] + "," + start[0] + ";" + end[1] + "," + end[0] + "?geometries=geojson", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Parse the response
+            var response = JSON.parse(xhr.responseText);
+          
+            // remove the previous route from the map
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.GeoJSON) {
+                    map.removeLayer(layer);
+                }
+            });
+          
+            // Display the route on the map
+            L.geoJSON(response.routes[0].geometry).addTo(map);
+        }
+    };
+    xhr.send();
+  }
+</script>
+
+
+
+
+
+    
+    
+   
+
+
+    
+  </body>
+</html>
